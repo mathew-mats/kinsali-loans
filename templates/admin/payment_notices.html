@@ -1,0 +1,176 @@
+{% extends 'admin/base_admin.html' %}
+{% block admin_title %}Payment Notices{% endblock %}
+{% block admin_subtitle %}Review user-submitted payment claims{% endblock %}
+
+{% block admin_content %}
+
+<!-- Pending Notices -->
+<div class="card border-0 shadow-sm mb-4" style="border-radius: 20px; overflow: hidden;">
+    <div class="card-header bg-white py-3" style="border-bottom: 1px solid #e9ecef;">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">
+                <i class="fas fa-clock me-2 text-warning"></i> Pending Payment Notices
+            </h5>
+            <span class="badge bg-warning text-dark">{{ pending_count }}</span>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        {% if pending_notices %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead style="background: #f8fafc;">
+                        <tr>
+                            <th style="padding: 14px 16px;">#</th>
+                            <th style="padding: 14px 16px;">User</th>
+                            <th style="padding: 14px 16px;">Loan</th>
+                            <th style="padding: 14px 16px;">Amount</th>
+                            <th style="padding: 14px 16px;">Method</th>
+                            <th style="padding: 14px 16px;">Transaction ID</th>
+                            <th style="padding: 14px 16px;">Submitted</th>
+                            <th style="padding: 14px 16px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for notice in pending_notices %}
+                            <tr>
+                                <td style="padding: 14px 16px; font-weight: 600;">#{{ notice.id }}</td>
+                                <td style="padding: 14px 16px;">
+                                    <div style="font-weight: 600;">{{ notice.user.username }}</div>
+                                    <small style="color: #6c757d;">{{ notice.user.email }}</small>
+                                </td>
+                                <td style="padding: 14px 16px;">
+                                    <a href="{% url 'admin_panel:loan_detail' notice.loan.id %}" style="color: #0a5c36; font-weight: 600; text-decoration: none;">
+                                        #{{ notice.loan.id }}
+                                    </a>
+                                </td>
+                                <td style="padding: 14px 16px; font-weight: 700; color: #0a5c36;">${{ notice.amount_claimed }}</td>
+                                <td style="padding: 14px 16px;">
+                                    <span class="badge bg-secondary">{{ notice.get_payment_method_display }}</span>
+                                </td>
+                                <td style="padding: 14px 16px;">
+                                    <code style="background: #f8fafc; padding: 4px 8px; border-radius: 6px;">{{ notice.transaction_id }}</code>
+                                </td>
+                                <td style="padding: 14px 16px;">
+                                    <small>{{ notice.created_at|date:"M d, Y H:i" }}</small>
+                                </td>
+                                <td style="padding: 14px 16px;">
+                                    <div class="d-flex gap-2">
+                                        <form method="post" action="{% url 'admin_panel:approve_payment_notice' notice.id %}" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-success" style="border-radius: 20px;" onclick="return confirm('Approve this payment of ${{ notice.amount_claimed }}?');">
+                                                <i class="fas fa-check"></i> Approve
+                                            </button>
+                                        </form>
+                                        <button type="button" class="btn btn-sm btn-danger" style="border-radius: 20px;" data-bs-toggle="modal" data-bs-target="#rejectModal{{ notice.id }}">
+                                            <i class="fas fa-times"></i> Reject
+                                        </button>
+                                    </div>
+
+                                    <!-- Reject Modal -->
+                                    <div class="modal fade" id="rejectModal{{ notice.id }}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content" style="border-radius: 16px;">
+                                                <form method="post" action="{% url 'admin_panel:reject_payment_notice' notice.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Reject Payment Notice #{{ notice.id }}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Rejecting <strong>${{ notice.amount_claimed }}</strong> claimed by <strong>{{ notice.user.username }}</strong>.</p>
+                                                        <label class="form-label fw-semibold">Reason for rejection</label>
+                                                        <textarea name="review_notes" class="form-control" rows="3" required placeholder="e.g., Transaction ID not found in our records"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-danger">Reject Notice</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-check-circle" style="font-size: 48px; color: #198754;"></i>
+                <h5 class="mt-3">All Caught Up!</h5>
+                <p style="color: #6c757d;">No pending payment notices to review.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- History -->
+<div class="row g-4">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-header bg-white py-3" style="border-bottom: 1px solid #e9ecef;">
+                <h6 class="mb-0 fw-bold"><i class="fas fa-check-circle me-2 text-success"></i> Recently Approved</h6>
+            </div>
+            <div class="card-body p-0">
+                {% if approved_notices %}
+                    <div class="list-group list-group-flush">
+                        {% for notice in approved_notices %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>{{ notice.user.username }}</strong> - Loan #{{ notice.loan.id }}
+                                        <div style="font-size: 0.85rem; color: #6c757d;">
+                                            {{ notice.transaction_id }} • {{ notice.reviewed_at|date:"M d, Y" }}
+                                        </div>
+                                    </div>
+                                    <span class="badge bg-success align-self-center">${{ notice.amount_claimed }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4" style="color: #6c757d;">
+                        <small>No approved notices yet</small>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-header bg-white py-3" style="border-bottom: 1px solid #e9ecef;">
+                <h6 class="mb-0 fw-bold"><i class="fas fa-times-circle me-2 text-danger"></i> Recently Rejected</h6>
+            </div>
+            <div class="card-body p-0">
+                {% if rejected_notices %}
+                    <div class="list-group list-group-flush">
+                        {% for notice in rejected_notices %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <strong>{{ notice.user.username }}</strong> - Loan #{{ notice.loan.id }}
+                                        <div style="font-size: 0.85rem; color: #6c757d;">
+                                            {{ notice.transaction_id }} • {{ notice.reviewed_at|date:"M d, Y" }}
+                                        </div>
+                                        {% if notice.review_notes %}
+                                            <small style="color: #dc3545;">{{ notice.review_notes }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <span class="badge bg-danger align-self-center">${{ notice.amount_claimed }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-4" style="color: #6c757d;">
+                        <small>No rejected notices yet</small>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

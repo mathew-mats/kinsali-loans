@@ -1,0 +1,36 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>🎊 Loan Fully Repaid!</h2>
+
+<p>Congratulations, {{ user.username }}!</p>
+
+<p>You've successfully repaid loan <strong>#{{ loan.id }}</strong> in full. Your account is now clear with Kinsali Loans.</p>
+
+<div class="info-box" style="border-left-color: #00b894; background: #f0fdf4;">
+    <p style="margin: 0;"><strong>Loan Summary:</strong></p>
+    <table style="width: 100%; font-size: 14px; margin-top: 8px;">
+        <tr>
+            <td style="padding: 4px 0;"><strong>Total Borrowed:</strong></td>
+            <td style="text-align: right;">${{ loan.amount_approved }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Total Repaid:</strong></td>
+            <td style="text-align: right;">${{ loan.total_repayment|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Status:</strong></td>
+            <td style="text-align: right;"><span class="badge badge-success">COMPLETED</span></td>
+        </tr>
+    </table>
+</div>
+
+<p>Building a positive repayment history with us improves your credit score for future loans. 🚀</p>
+
+<a href="http://127.0.0.1:8000/apply/" class="btn">Apply for Another Loan</a>
+
+<p style="margin-top: 30px; color: #6c757d; font-size: 14px;">
+    Thanks for being a valued customer!<br>
+    <strong>The Kinsali Loans Team</strong>
+</p>
+{% endblock %}

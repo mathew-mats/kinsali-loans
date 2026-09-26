@@ -1,0 +1,32 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Payment Notice Received 📩</h2>
+
+<p>Hi {{ user.username }},</p>
+
+<p>We've received your payment notice for loan <strong>#{{ loan.id }}</strong>. Our team will verify your payment shortly.</p>
+
+<div class="info-box">
+    <table style="width: 100%; font-size: 14px;">
+        <tr>
+            <td style="padding: 4px 0;"><strong>Amount Claimed:</strong></td>
+            <td style="text-align: right;">${{ notice.amount_claimed }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Transaction ID:</strong></td>
+            <td style="text-align: right;">{{ notice.transaction_id }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Method:</strong></td>
+            <td style="text-align: right;">{{ notice.get_payment_method_display }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Status:</strong></td>
+            <td style="text-align: right;"><span class="badge badge-warning">Pending Review</span></td>
+        </tr>
+    </table>
+</div>
+
+<p>You'll receive another email once we've processed your payment.</p>
+{% endblock %}

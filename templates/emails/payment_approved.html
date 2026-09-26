@@ -1,0 +1,23 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Payment Approved ✅</h2>
+
+<p>Hi {{ user.username }},</p>
+
+<p>Your payment of <strong>${{ notice.amount_claimed }}</strong> for loan <strong>#{{ loan.id }}</strong> has been verified and recorded.</p>
+
+<div class="info-box">
+    <p style="margin: 0;"><strong>Transaction:</strong> {{ notice.transaction_id }}</p>
+    <p style="margin: 8px 0 0;"><strong>Status:</strong> <span class="badge badge-success">Approved</span></p>
+</div>
+
+<p><strong>Loan update:</strong> Your repayment schedule has been updated automatically.</p>
+
+<a href="http://127.0.0.1:8000/loan/{{ loan.id }}/" class="btn">View Updated Schedule</a>
+
+<p style="margin-top: 30px; color: #6c757d; font-size: 14px;">
+    Thank you for your timely payment!<br>
+    <strong>The Kinsali Loans Team</strong>
+</p>
+{% endblock %}

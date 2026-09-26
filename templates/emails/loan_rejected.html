@@ -1,0 +1,29 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Loan Application Update</h2>
+
+<p>Hi {{ user.username }},</p>
+
+<p>We regret to inform you that your loan application <strong>#{{ loan.id }}</strong> was not approved at this time.</p>
+
+<div class="info-box" style="border-left-color: #dc3545;">
+    <p style="margin: 0;"><strong style="color: #dc3545;">Reason:</strong></p>
+    <p style="margin: 8px 0 0;">{{ reason|default:"Application did not meet our current criteria." }}</p>
+</div>
+
+<p><strong>What you can do:</strong></p>
+<ul>
+    <li>Review the reason above</li>
+    <li>Build up your credit score by repaying any existing loans on time</li>
+    <li>Reapply in the future once your situation improves</li>
+    <li>Contact us if you believe this was a mistake</li>
+</ul>
+
+<a href="http://127.0.0.1:8000/contact/" class="btn">Contact Support</a>
+
+<p style="margin-top: 30px; color: #6c757d; font-size: 14px;">
+    We hope to help you in the future.<br>
+    <strong>The Kinsali Loans Team</strong>
+</p>
+{% endblock %}

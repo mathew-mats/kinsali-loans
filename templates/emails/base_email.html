@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        }
+        .header {
+            background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: #fff;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        .header p {
+            margin: 8px 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .body {
+            padding: 40px 30px;
+            line-height: 1.7;
+        }
+        .body h2 {
+            color: #0a5c36;
+            font-size: 22px;
+            margin-top: 0;
+        }
+        .body p {
+            font-size: 15px;
+            color: #444;
+        }
+        .info-box {
+            background: #f8fafc;
+            border-left: 4px solid #0a5c36;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+        .info-box strong {
+            color: #0a5c36;
+        }
+        .btn {
+            display: inline-block;
+            background: #0a5c36;
+            color: #fff !important;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        .btn:hover {
+            background: #084d2d;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-info { background: #cffafe; color: #155e75; }
+        .footer {
+            background: #f8fafc;
+            padding: 24px 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+        }
+        .footer a {
+            color: #0a5c36;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Kinsali Loans</h1>
+            <p>Your trusted loan partner</p>
+        </div>
+        <div class="body">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="footer">
+            <p style="margin: 0 0 8px;">This is an automated message from Kinsali Loans.</p>
+            <p style="margin: 0;">Need help? Contact us at <a href="mailto:support@kinsaliloans.com">support@kinsaliloans.com</a></p>
+            <p style="margin: 12px 0 0; color: #adb5bd;">© 2026 Kinsali Loans. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

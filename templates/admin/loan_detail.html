@@ -1,0 +1,392 @@
+{% extends 'admin/base_admin.html' %}
+{% block admin_title %}Review Loan #{{ loan.id }}{% endblock %}
+{% block admin_subtitle %}Review application details and take action{% endblock %}
+
+{% block admin_content %}
+
+<div class="row g-4">
+    <!-- Left: Loan Info -->
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-body p-3 p-md-4">
+                <!-- Status Badge -->
+                <div class="mb-3">
+                    <span class="badge {% if loan.status == 'PENDING' %}bg-warning text-dark{% elif loan.status == 'APPROVED' %}bg-success{% elif loan.status == 'REJECTED' %}bg-danger{% elif loan.status == 'DISBURSED' %}bg-info{% elif loan.status == 'COMPLETED' %}bg-success{% else %}bg-secondary{% endif %} px-3 py-2" style="font-size: 0.9rem;">
+                        {{ loan.get_status_display }}
+                    </span>
+                    {% if loan.approved_at %}
+                        <small class="ms-2" style="color: #6c757d; font-size: 0.8rem;">Approved: {{ loan.approved_at|date:"M d, Y" }}</small>
+                    {% endif %}
+                    {% if loan.disbursed_at %}
+                        <small class="ms-2" style="color: #6c757d; font-size: 0.8rem;">Disbursed: {{ loan.disbursed_at|date:"M d, Y" }}</small>
+                    {% endif %}
+                </div>
+
+                <!-- Loan Details -->
+                <h6 style="font-weight: 700; color: #0a5c36; border-bottom: 2px solid #f8fafc; padding-bottom: 10px; font-size: 1rem;">
+                    <i class="fas fa-hand-holding-usd me-2"></i> Loan Information
+                </h6>
+                <div class="row g-2 g-md-3 mt-2">
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Amount Requested</small>
+                        <div style="font-weight: 700; font-size: 1.2rem;">${{ loan.amount_requested }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Amount Approved</small>
+                        <div style="font-weight: 700; font-size: 1.2rem;">
+                            ${{ loan.amount_approved|default:"Pending" }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Tenure</small>
+                        <div style="font-weight: 600;">{{ loan.tenure_months }} months</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Interest Rate</small>
+                        <div style="font-weight: 600;">{{ loan.interest_rate_applied }}% APR</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Monthly EMI</small>
+                        <div style="font-weight: 600;">${{ loan.monthly_emi|floatformat:2 }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Total Repayment</small>
+                        <div style="font-weight: 600;">${{ loan.total_repayment|floatformat:2 }}</div>
+                    </div>
+                    <div class="col-12">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Purpose</small>
+                        <div style="background: #f8fafc; padding: 10px; border-radius: 12px; margin-top: 4px; font-size: 0.9rem;">{{ loan.purpose_of_loan }}</div>
+                    </div>
+                </div>
+
+                <!-- Applicant Details -->
+                <h6 style="font-weight: 700; color: #0a5c36; border-bottom: 2px solid #f8fafc; padding-bottom: 10px; margin-top: 20px; font-size: 1rem;">
+                    <i class="fas fa-user me-2"></i> Applicant Information
+                </h6>
+                <div class="row g-2 g-md-3 mt-2">
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Full Name</small>
+                        <div style="font-weight: 600;">{{ loan.user.get_full_name|default:loan.user.username }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Email</small>
+                        <div style="font-weight: 600;">{{ loan.user.email }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Phone</small>
+                        <div style="font-weight: 600;">{{ loan.user.profile.phone_number }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Credit Score</small>
+                        <div>
+                            <span class="badge {% if loan.credit_score_at_application >= 600 %}bg-success{% elif loan.credit_score_at_application >= 400 %}bg-warning{% else %}bg-danger{% endif %}" style="font-size: 0.85rem;">
+                                {{ loan.credit_score_at_application }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Employment</small>
+                        <div style="font-weight: 600;">{{ loan.user.profile.get_employment_status_display }}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Monthly Income</small>
+                        <div style="font-weight: 600;">${{ loan.user.profile.monthly_income }}</div>
+                    </div>
+                    <div class="col-12">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Address</small>
+                        <div style="font-weight: 600; font-size: 0.9rem;">{{ loan.user.profile.residential_address }}, {{ loan.user.profile.city }}, {{ loan.user.profile.state }}</div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                {% if loan.review_notes %}
+                    <div class="mt-3" style="background: #f8fafc; border-radius: 12px; padding: 10px;">
+                        <small style="color: #6c757d; font-size: 0.8rem;">Review Notes:</small>
+                        <div style="font-size: 0.9rem;">{{ loan.review_notes }}</div>
+                    </div>
+                {% endif %}
+                {% if loan.rejection_reason %}
+                    <div class="mt-3" style="background: #fef2f2; border-radius: 12px; padding: 10px; border: 1px solid #fecaca;">
+                        <small style="color: #dc3545; font-size: 0.8rem;">Rejection Reason:</small>
+                        <div style="font-weight: 600; font-size: 0.9rem;">{{ loan.rejection_reason }}</div>
+                    </div>
+                {% endif %}
+
+                <!-- ===== DISBURSEMENT DETAILS ===== -->
+                {% if loan.status == 'DISBURSED' or loan.status == 'COMPLETED' %}
+                    <div style="background: #e8f4fd; border-radius: 16px; padding: 15px; margin-top: 20px;">
+                        <h6 style="font-weight: 700; color: #0a5c36; margin-bottom: 10px;">
+                            <i class="fas fa-credit-card me-2"></i> Disbursement Details
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-sm-6">
+                                <small style="color: #6c757d;">Method</small>
+                                <div style="font-weight: 600;">{{ loan.get_disbursement_method_display|default:"Not specified" }}</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <small style="color: #6c757d;">Reference</small>
+                                <div style="font-weight: 600;">{{ loan.disbursement_reference|default:"N/A" }}</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <small style="color: #6c757d;">Disbursed By</small>
+                                <div style="font-weight: 600;">{{ loan.disbursed_by.username|default:"N/A" }}</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <small style="color: #6c757d;">Date</small>
+                                <div style="font-weight: 600;">{{ loan.disbursed_at|date:"F d, Y H:i"|default:"N/A" }}</div>
+                            </div>
+                            {% if loan.disbursement_notes %}
+                                <div class="col-12">
+                                    <small style="color: #6c757d;">Notes</small>
+                                    <div>{{ loan.disbursement_notes }}</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- ===== REPAYMENT SCHEDULE ===== -->
+                {% if repayments %}
+                    <div style="background: #fff; border: 1px solid #e9ecef; border-radius: 16px; padding: 15px; margin-top: 20px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 style="font-weight: 700; color: #0a5c36; margin: 0; font-size: 1rem;">
+                                <i class="fas fa-calendar-check me-2"></i> Repayment Schedule
+                            </h6>
+                            <span class="badge bg-secondary">{{ repayments.count }} payments</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm mb-0" style="font-size: 0.85rem;">
+                                <thead style="background: #f8fafc;">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Due Date</th>
+                                        <th>Due</th>
+                                        <th>Paid</th>
+                                        <th>Balance</th>
+                                        <th>Status</th>
+                                        <th>Record Payment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for payment in repayments %}
+                                        <tr>
+                                            <td style="font-weight: 600;">{{ forloop.counter }}</td>
+                                            <td>{{ payment.due_date|date:"M d, Y" }}</td>
+                                            <td style="font-weight: 600;">${{ payment.amount_due|floatformat:2 }}</td>
+                                            <td style="color: #198754; font-weight: 600;">${{ payment.amount_paid|floatformat:2 }}</td>
+                                            <td style="color: #dc3545; font-weight: 600;">${{ payment.balance|floatformat:2 }}</td>
+                                            <td>
+                                                {% if payment.is_paid %}
+                                                    <span class="badge bg-success">
+                                                        <i class="fas fa-check me-1"></i> Paid
+                                                    </span>
+                                                {% elif payment.amount_paid > 0 %}
+                                                    <span class="badge bg-info">
+                                                        <i class="fas fa-hourglass-half me-1"></i> Partial
+                                                    </span>
+                                                {% elif payment.due_date < today %}
+                                                    <span class="badge bg-danger">
+                                                        <i class="fas fa-exclamation-triangle me-1"></i> Overdue
+                                                    </span>
+                                                {% else %}
+                                                    <span class="badge bg-warning text-dark">
+                                                        <i class="fas fa-clock me-1"></i> Pending
+                                                    </span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if not payment.is_paid %}
+                                                    <form method="post" action="{% url 'admin_panel:mark_payment_paid' payment.id %}" style="display: flex; gap: 5px; align-items: center;">
+                                                        {% csrf_token %}
+                                                        <input type="number" 
+                                                               name="amount_paid" 
+                                                               step="0.01" 
+                                                               min="0.01" 
+                                                               max="{{ payment.balance }}"
+                                                               value="{{ payment.balance }}"
+                                                               class="form-control form-control-sm" 
+                                                               style="width: 90px; border-radius: 8px;"
+                                                               required>
+                                                        <button type="submit" 
+                                                                class="btn btn-sm btn-success" 
+                                                                style="border-radius: 20px; font-size: 0.75rem; white-space: nowrap;"
+                                                                onclick="return confirm('Record this payment?');">
+                                                            <i class="fas fa-check"></i> Record
+                                                        </button>
+                                                    </form>
+                                                {% else %}
+                                                    <small style="color: #6c757d;">
+                                                        <i class="fas fa-check-circle text-success"></i>
+                                                        {{ payment.payment_date|date:"M d, Y" }}
+                                                    </small>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% elif loan.status == 'APPROVED' or loan.status == 'DISBURSED' %}
+                    <div style="background: #fff8e1; border-radius: 16px; padding: 15px; margin-top: 20px; border: 1px solid #ffe082;">
+                        <small style="color: #6c757d;">
+                            <i class="fas fa-info-circle me-1"></i>
+                            No repayment schedule generated yet. Click "Generate Schedule" on the right.
+                        </small>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Right: Actions -->
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-body p-3 p-md-4">
+                <h6 style="font-weight: 700; color: #0a5c36; border-bottom: 2px solid #f8fafc; padding-bottom: 10px; font-size: 1rem;">
+                    <i class="fas fa-tasks me-2"></i> Actions
+                </h6>
+
+                {% if loan.status == 'PENDING' %}
+                    <!-- Approve -->
+                    <div style="background: #f0fdf4; border-radius: 16px; padding: 15px; margin-bottom: 12px;">
+                        <form method="post" action="{% url 'admin_panel:approve' loan.id %}">
+                            {% csrf_token %}
+                            <label class="form-label fw-semibold" style="font-size: 0.85rem;">
+                                <i class="fas fa-check-circle text-success me-1"></i> Approve Loan
+                            </label>
+                            <div class="mb-2">
+                                <input type="number" step="0.01" name="amount_approved" class="form-control" style="border-radius: 12px;" value="{{ loan.amount_requested }}">
+                            </div>
+                            <div class="mb-2">
+                                <textarea name="notes" class="form-control" style="border-radius: 12px;" rows="2" placeholder="Approval notes (optional)"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100" style="border-radius: 50px;">
+                                <i class="fas fa-check me-2"></i> Approve Loan
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Reject -->
+                    <div style="background: #fef2f2; border-radius: 16px; padding: 15px;">
+                        <form method="post" action="{% url 'admin_panel:reject' loan.id %}">
+                            {% csrf_token %}
+                            <label class="form-label fw-semibold" style="font-size: 0.85rem;">
+                                <i class="fas fa-times-circle text-danger me-1"></i> Reject Loan
+                            </label>
+                            <div class="mb-2">
+                                <textarea name="rejection_reason" class="form-control" style="border-radius: 12px;" rows="2" placeholder="Reason for rejection" required></textarea>
+                            </div>
+                            <div class="mb-2">
+                                <textarea name="notes" class="form-control" style="border-radius: 12px;" rows="2" placeholder="Internal notes (optional)"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100" style="border-radius: 50px;">
+                                <i class="fas fa-times me-2"></i> Reject Loan
+                            </button>
+                        </form>
+                    </div>
+
+                {% elif loan.status == 'APPROVED' %}
+                    <!-- User Payment Details -->
+                    <div style="background: #f0fdf4; border-radius: 12px; padding: 12px; margin-bottom: 15px; border: 1px solid #bbf7d0;">
+                        <h6 style="font-weight: 700; color: #0a5c36; font-size: 0.85rem;">
+                            <i class="fas fa-user-check me-1"></i> User Payment Details
+                        </h6>
+                        <div style="font-size: 0.9rem;">
+                            <strong>Mobile Money:</strong> 
+                            {{ loan.user.profile.mobile_money_number|default:"Not set" }}
+                            {% if loan.user.profile.mobile_money_number %}
+                                <span class="badge bg-secondary">{{ loan.user.profile.get_mobile_money_network_display }}</span>
+                            {% endif %}
+                        </div>
+                        <div style="font-size: 0.9rem;">
+                            <strong>Bank:</strong> {{ loan.user.profile.bank_name|default:"Not set" }}
+                            {% if loan.user.profile.bank_account_number %}
+                                - {{ loan.user.profile.bank_account_number }}
+                            {% endif %}
+                        </div>
+                        <small style="color: #6c757d; font-size: 0.75rem;">
+                            <i class="fas fa-info-circle me-1"></i> 
+                            Send the money using these details. Then record the transaction reference below.
+                        </small>
+                    </div>
+
+                    <!-- Disbursement Form -->
+                    <div style="background: #f8fafc; border-radius: 16px; padding: 15px; margin-bottom: 12px;">
+                        <p class="mb-2" style="font-size: 0.9rem;"><i class="fas fa-info-circle text-info me-1"></i> Loan has been approved. Enter disbursement details below.</p>
+                        <form method="post" action="{% url 'admin_panel:disburse' loan.id %}">
+                            {% csrf_token %}
+                            <div class="mb-2">
+                                <label class="form-label fw-semibold" style="font-size: 0.85rem;">Method</label>
+                                <select name="disbursement_method" class="form-control" style="border-radius: 12px;">
+                                    <option value="MOBILE_MONEY">Mobile Money</option>
+                                    <option value="BANK_TRANSFER">Bank Transfer</option>
+                                    <option value="CASH_PICKUP">Cash Pickup</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label fw-semibold" style="font-size: 0.85rem;">Reference / Transaction ID</label>
+                                <input type="text" name="disbursement_reference" class="form-control" style="border-radius: 12px;" placeholder="e.g., MMO123456789">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label fw-semibold" style="font-size: 0.85rem;">Notes</label>
+                                <textarea name="disbursement_notes" class="form-control" style="border-radius: 12px;" rows="2" placeholder="Any additional notes..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" style="border-radius: 50px;">
+                                <i class="fas fa-hand-holding-usd me-2"></i> Confirm Disbursement
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Generate Schedule button -->
+                    <div style="background: #f0fdf4; border-radius: 16px; padding: 15px;">
+                        <p class="mb-2" style="font-size: 0.9rem;"><i class="fas fa-calendar-alt text-success me-1"></i> Generate repayment schedule</p>
+                        <a href="{% url 'admin_panel:generate_schedule' loan.id %}" class="btn btn-success w-100" style="border-radius: 50px;">
+                            <i class="fas fa-file-invoice me-2"></i> Generate Schedule
+                        </a>
+                    </div>
+
+                {% elif loan.status == 'DISBURSED' %}
+                    <div style="background: #f0fdf4; border-radius: 16px; padding: 15px; margin-bottom: 12px;">
+                        <p class="mb-0" style="font-size: 0.9rem;"><i class="fas fa-check-circle text-success me-1"></i> Loan has been disbursed</p>
+                        <small style="color: #6c757d; font-size: 0.8rem;">Disbursed on: {{ loan.disbursed_at|date:"M d, Y" }}</small>
+                    </div>
+
+                    {% if not repayments %}
+                        <div style="background: #f0fdf4; border-radius: 16px; padding: 15px;">
+                            <p class="mb-2" style="font-size: 0.9rem;"><i class="fas fa-calendar-alt text-success me-1"></i> Generate repayment schedule</p>
+                            <a href="{% url 'admin_panel:generate_schedule' loan.id %}" class="btn btn-success w-100" style="border-radius: 50px;">
+                                <i class="fas fa-file-invoice me-2"></i> Generate Schedule
+                            </a>
+                        </div>
+                    {% endif %}
+
+                {% elif loan.status == 'COMPLETED' %}
+                    <div style="background: #f0fdf4; border-radius: 16px; padding: 15px;">
+                        <p class="mb-0" style="font-size: 0.9rem;"><i class="fas fa-check-double text-success me-1"></i> Loan has been fully repaid</p>
+                        <small style="color: #6c757d; font-size: 0.8rem;">Completed ✅</small>
+                    </div>
+
+                {% elif loan.status == 'REJECTED' %}
+                    <div style="background: #fef2f2; border-radius: 16px; padding: 15px;">
+                        <p class="mb-2" style="font-size: 0.9rem;"><i class="fas fa-info-circle text-danger me-1"></i> Loan has been rejected</p>
+                        <div style="background: #fff; border-radius: 12px; padding: 10px;">
+                            <small style="color: #6c757d; font-size: 0.8rem;">Reason:</small>
+                            <div style="font-size: 0.9rem;">{{ loan.rejection_reason|default:"No reason provided" }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Back -->
+                <div class="mt-3">
+                    <a href="{% url 'admin_panel:dashboard' %}" class="btn btn-outline-secondary w-100" style="border-radius: 50px;">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

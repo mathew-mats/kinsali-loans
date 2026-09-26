@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login – Kinsali Loans{% endblock %}
+
+{% block content %}
+
+<!-- ===== PAGE HEADER ===== -->
+<section style="background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); padding: 80px 0 60px; color: #fff; margin-top: -76px;">
+    <div class="container text-center" data-aos="fade-up">
+        <span class="badge bg-warning text-dark px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+            <i class="fas fa-sign-in-alt me-1"></i> Welcome Back
+        </span>
+        <h1 style="font-weight: 800; font-size: 3rem;">Login to <br>Your Account</h1>
+        <p style="font-size: 1.15rem; opacity: 0.9; max-width: 500px; margin: 16px auto 0;">Access your loans, track applications, and manage your finances.</p>
+    </div>
+</section>
+
+<!-- ===== LOGIN FORM ===== -->
+<section style="padding: 60px 0 80px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6" data-aos="fade-up">
+                <div style="background: #fff; border-radius: 24px; box-shadow: 0 10px 60px rgba(0,0,0,0.06); padding: 40px; border: 1px solid rgba(0,0,0,0.04);">
+                    <div class="text-center mb-4">
+                        <div style="width: 64px; height: 64px; background: rgba(10,92,54,0.08); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #0a5c36; margin: 0 auto 12px;">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3 style="font-weight: 700;">Login</h3>
+                        <p style="color: #6c757d;">Enter your credentials to access your account</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                <i class="fas fa-user me-1"></i> Username
+                            </label>
+                            <input type="text" name="username" class="form-control form-control-lg" style="border-radius: 12px; border: 1px solid #e2e8f0;" placeholder="Enter your username" required>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                <i class="fas fa-lock me-1"></i> Password
+                            </label>
+                            <input type="password" name="password" class="form-control form-control-lg" style="border-radius: 12px; border: 1px solid #e2e8f0;" placeholder="Enter your password" required>
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                <label class="form-check-label" for="remember" style="font-size: 0.9rem; color: #6c757d;">Remember me</label>
+                            </div>
+                            <a href="#" style="color: #0a5c36; font-size: 0.9rem; text-decoration: none;">Forgot password?</a>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit" class="btn btn-primary-custom w-100 py-3" style="border-radius: 50px; font-size: 1.05rem;">
+                            <i class="fas fa-sign-in-alt me-2"></i> Login
+                        </button>
+
+                        <!-- Register Link -->
+                        <div class="text-center mt-3">
+                            <p style="color: #6c757d;">
+                                Don't have an account?
+                                <a href="{% url 'accounts:register' %}" style="color: #0a5c36; font-weight: 600; text-decoration: none;">
+                                    Create one <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

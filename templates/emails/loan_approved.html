@@ -1,0 +1,34 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Loan Approved! 🎉</h2>
+
+<p>Great news, {{ user.username }}!</p>
+
+<p>Your loan application <strong>#{{ loan.id }}</strong> has been approved.</p>
+
+<div class="info-box">
+    <table style="width: 100%; font-size: 14px;">
+        <tr>
+            <td style="padding: 4px 0;"><strong>Amount Approved:</strong></td>
+            <td style="text-align: right;">${{ loan.amount_approved }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Tenure:</strong></td>
+            <td style="text-align: right;">{{ loan.tenure_months }} months</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Monthly EMI:</strong></td>
+            <td style="text-align: right;">${{ loan.monthly_emi|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Total Repayment:</strong></td>
+            <td style="text-align: right;">${{ loan.total_repayment|floatformat:2 }}</td>
+        </tr>
+    </table>
+</div>
+
+<p><strong>What happens next?</strong> We'll process your disbursement shortly and notify you once the money has been sent.</p>
+
+<a href="http://127.0.0.1:8000/loan/{{ loan.id }}/" class="btn">View Loan Details</a>
+{% endblock %}

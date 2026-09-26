@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact Us – Kinsali Loans{% endblock %}
+
+{% block content %}
+
+<!-- ===== PAGE HEADER ===== -->
+<section style="background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); padding: 100px 0 60px; color: #fff; margin-top: -76px;">
+    <div class="container text-center" data-aos="fade-up">
+        <span class="badge bg-warning text-dark px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+            <i class="fas fa-envelope me-1"></i> Get in Touch
+        </span>
+        <h1 style="font-weight: 800; font-size: 3rem;">We'd Love to <br>Hear From You</h1>
+        <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 16px auto 0;">Have questions? Reach out and we'll get back to you within 24 hours.</p>
+    </div>
+</section>
+
+<!-- ===== CONTACT INFO + FORM ===== -->
+<section style="padding: 80px 0;">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Contact Info -->
+            <div class="col-lg-4" data-aos="fade-right">
+                <div style="background: #f8fafc; border-radius: 24px; padding: 30px; height: 100%;">
+                    <div class="mb-4">
+                        <div style="width: 48px; height: 48px; background: rgba(10,92,54,0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #0a5c36; margin-bottom: 12px;">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h6 style="font-weight: 600;">Phone</h6>
+                        <p style="color: #6c757d; margin-bottom: 0;">+1 (234) 567-8900</p>
+                        <p style="color: #6c757d; font-size: 0.9rem;">Mon-Fri, 9am – 6pm</p>
+                    </div>
+                    <div class="mb-4">
+                        <div style="width: 48px; height: 48px; background: rgba(247,147,30,0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #f7931e; margin-bottom: 12px;">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h6 style="font-weight: 600;">Email</h6>
+                        <p style="color: #6c757d; margin-bottom: 0;">info@kinsali.com</p>
+                        <p style="color: #6c757d; font-size: 0.9rem;">We respond within 24 hours</p>
+                    </div>
+                    <div>
+                        <div style="width: 48px; height: 48px; background: rgba(0,184,148,0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #00b894; margin-bottom: 12px;">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h6 style="font-weight: 600;">Address</h6>
+                        <p style="color: #6c757d; margin-bottom: 0;">123 Finance Street,</p>
+                        <p style="color: #6c757d;">New York, NY 10001</p>
+                    </div>
+                    <!-- Social -->
+                    <div class="mt-4 pt-3" style="border-top: 1px solid rgba(0,0,0,0.06);">
+                        <p style="font-weight: 600; margin-bottom: 12px;">Connect with us</p>
+                        <div class="d-flex gap-2">
+                            <a href="#" style="width: 40px; height: 40px; background: rgba(10,92,54,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0a5c36; transition: all 0.3s ease;" onmouseover="this.style.background='#0a5c36'; this.style.color='#fff';" onmouseout="this.style.background='rgba(10,92,54,0.08)'; this.style.color='#0a5c36';">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" style="width: 40px; height: 40px; background: rgba(10,92,54,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0a5c36; transition: all 0.3s ease;" onmouseover="this.style.background='#0a5c36'; this.style.color='#fff';" onmouseout="this.style.background='rgba(10,92,54,0.08)'; this.style.color='#0a5c36';">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" style="width: 40px; height: 40px; background: rgba(10,92,54,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0a5c36; transition: all 0.3s ease;" onmouseover="this.style.background='#0a5c36'; this.style.color='#fff';" onmouseout="this.style.background='rgba(10,92,54,0.08)'; this.style.color='#0a5c36';">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" style="width: 40px; height: 40px; background: rgba(10,92,54,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0a5c36; transition: all 0.3s ease;" onmouseover="this.style.background='#0a5c36'; this.style.color='#fff';" onmouseout="this.style.background='rgba(10,92,54,0.08)'; this.style.color='#0a5c36';">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="col-lg-8" data-aos="fade-left">
+                <div style="background: #f8fafc; border-radius: 24px; padding: 40px;">
+                    <h5 style="font-weight: 700; margin-bottom: 4px;">Send Us a Message</h5>
+                    <p style="color: #6c757d; margin-bottom: 24px;">Fill out the form below and we'll get back to you soon.</p>
+                    <form method="post" action="#">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-user me-1"></i> Your Name</label>
+                                <input type="text" class="form-control form-control-lg" style="border-radius: 12px; border: 1px solid #e2e8f0;" placeholder="Mathewcodesit " required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-envelope me-1"></i> Email Address</label>
+                                <input type="email" class="form-control form-control-lg" style="border-radius: 12px; border: 1px solid #e2e8f0;" placeholder="mathewcodesit@example.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold"><i class="fas fa-tag me-1"></i> Subject</label>
+                                <input type="text" class="form-control form-control-lg" style="border-radius: 12px; border: 1px solid #e2e8f0;" placeholder="Loan inquiry" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold"><i class="fas fa-comment me-1"></i> Message</label>
+                                <textarea class="form-control form-control-lg" style="border-radius: 12px; border: 1px solid #e2e8f0;" rows="5" placeholder="Tell us how we can help..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary-custom w-100 py-3" style="border-radius: 50px; font-size: 1.05rem;">
+                                    <i class="fas fa-paper-plane me-2"></i> Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

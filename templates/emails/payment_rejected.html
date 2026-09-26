@@ -1,0 +1,25 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Payment Notice Rejected ❌</h2>
+
+<p>Hi {{ user.username }},</p>
+
+<p>We were unable to verify your recent payment notice for loan <strong>#{{ loan.id }}</strong>.</p>
+
+<div class="info-box" style="border-left-color: #dc3545;">
+    <p style="margin: 0;"><strong>Claimed Amount:</strong> ${{ notice.amount_claimed }}</p>
+    <p style="margin: 8px 0 0;"><strong>Transaction ID:</strong> {{ notice.transaction_id }}</p>
+    <p style="margin: 8px 0 0;"><strong style="color: #dc3545;">Reason:</strong> {{ reason|default:"Transaction could not be verified." }}</p>
+</div>
+
+<p><strong>What to do:</strong></p>
+<ul>
+    <li>Double-check your transaction ID</li>
+    <li>Make sure the amount matches what you sent</li>
+    <li>Re-submit a new notice from your loan detail page</li>
+    <li>Contact support if you're sure the payment was made</li>
+</ul>
+
+<a href="http://127.0.0.1:8000/loan/{{ loan.id }}/" class="btn">Re-submit Notice</a>
+{% endblock %}

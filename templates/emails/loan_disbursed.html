@@ -1,0 +1,30 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Money Sent! 💰</h2>
+
+<p>Hi {{ user.username }},</p>
+
+<p>Your loan <strong>#{{ loan.id }}</strong> has been disbursed. The money has been sent to you via <strong>{{ loan.get_disbursement_method_display }}</strong>.</p>
+
+<div class="info-box">
+    <table style="width: 100%; font-size: 14px;">
+        <tr>
+            <td style="padding: 4px 0;"><strong>Amount Sent:</strong></td>
+            <td style="text-align: right;">${{ loan.amount_approved }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Transaction ID:</strong></td>
+            <td style="text-align: right;">{{ loan.disbursement_reference|default:"N/A" }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Date:</strong></td>
+            <td style="text-align: right;">{{ loan.disbursed_at|date:"M d, Y H:i" }}</td>
+        </tr>
+    </table>
+</div>
+
+<p><strong>Next steps:</strong> Your repayment schedule will be generated shortly. You'll be notified when your first payment is due.</p>
+
+<a href="http://127.0.0.1:8000/loan/{{ loan.id }}/" class="btn">View Loan Details</a>
+{% endblock %}

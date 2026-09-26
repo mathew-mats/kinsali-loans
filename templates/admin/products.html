@@ -1,0 +1,77 @@
+{% extends 'admin/base_admin.html' %}
+{% block admin_title %}Manage Products{% endblock %}
+{% block admin_subtitle %}Add, edit, or delete loan products{% endblock %}
+
+{% block admin_content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <div>
+        <span class="badge bg-secondary">{{ products|length }} Products</span>
+    </div>
+    <a href="{% url 'admin_panel:product_create' %}" class="btn btn-primary" style="border-radius: 50px;">
+        <i class="fas fa-plus me-2"></i> Add New Product
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+    <div class="card-body p-0">
+        {% if products %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" style="min-width: 600px;">
+                    <thead style="background: #f8fafc;">
+                        <tr>
+                            <th style="padding: 14px 16px;">Name</th>
+                            <th style="padding: 14px 16px;">Min</th>
+                            <th style="padding: 14px 16px;">Max</th>
+                            <th style="padding: 14px 16px;">Rate</th>
+                            <th style="padding: 14px 16px;">Tenure</th>
+                            <th style="padding: 14px 16px;">Status</th>
+                            <th style="padding: 14px 16px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td style="padding: 14px 16px; font-weight: 600;">{{ product.name }}</td>
+                                <td style="padding: 14px 16px;">${{ product.min_amount }}</td>
+                                <td style="padding: 14px 16px;">${{ product.max_amount }}</td>
+                                <td style="padding: 14px 16px;">{{ product.interest_rate }}%</td>
+                                <td style="padding: 14px 16px;">{{ product.min_tenure_months }}-{{ product.max_tenure_months }} mo</td>
+                                <td style="padding: 14px 16px;">
+                                    <span class="badge {% if product.is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                                        {% if product.is_active %}Active{% else %}Inactive{% endif %}
+                                    </span>
+                                </td>
+                                <td style="padding: 14px 16px;">
+                                    <a href="{% url 'admin_panel:product_edit' product.id %}" class="btn btn-sm btn-outline-primary" style="border-radius: 30px;">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'admin_panel:product_delete' product.id %}" class="btn btn-sm btn-outline-danger" style="border-radius: 30px;">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-box-open" style="font-size: 48px; color: #6c757d;"></i>
+                <h5 class="mt-3">No products yet</h5>
+                <p style="color: #6c757d;">Create your first loan product.</p>
+                <a href="{% url 'admin_panel:product_create' %}" class="btn btn-primary-custom" style="border-radius: 50px;">
+                    <i class="fas fa-plus me-2"></i> Add Product
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Quick Tip -->
+<div class="alert alert-info mt-4" style="border-radius: 16px;">
+    <i class="fas fa-lightbulb me-2"></i>
+    <strong>Tip:</strong> Only <strong>Active</strong> products are visible to users when applying for loans.
+</div>
+
+{% endblock %}

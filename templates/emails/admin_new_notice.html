@@ -1,0 +1,40 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>🔔 New Payment Notice</h2>
+
+<p>A user has submitted a payment notice that needs your review.</p>
+
+<div class="info-box">
+    <table style="width: 100%; font-size: 14px;">
+        <tr>
+            <td style="padding: 4px 0;"><strong>User:</strong></td>
+            <td style="text-align: right;">{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Email:</strong></td>
+            <td style="text-align: right;">{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Loan ID:</strong></td>
+            <td style="text-align: right;">#{{ loan.id }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Amount:</strong></td>
+            <td style="text-align: right;">${{ notice.amount_claimed }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Transaction ID:</strong></td>
+            <td style="text-align: right;">{{ notice.transaction_id }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 0;"><strong>Method:</strong></td>
+            <td style="text-align: right;">{{ notice.get_payment_method_display }}</td>
+        </tr>
+    </table>
+</div>
+
+<p>Please verify the transaction in your MoMo/Bank account and approve or reject accordingly.</p>
+
+<a href="http://127.0.0.1:8000/admin-panel/payment-notices/" class="btn">Review Payment Notice</a>
+{% endblock %}

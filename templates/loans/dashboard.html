@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}My Dashboard – Kinsali Loans{% endblock %}
+
+{% block content %}
+
+<!-- ===== DASHBOARD HEADER ===== -->
+<section style="background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); padding: 20px 0 50px; color: #fff; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -80px; left: -80px; width: 200px; height: 200px; background: rgba(255,255,255,0.03); border-radius: 50%;"></div>
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="badge bg-warning text-dark px-3 py-2 mb-2" style="border-radius: 30px; font-size: 0.85rem;">
+                    <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                </span>
+                <h1 style="font-weight: 800; font-size: 2.8rem;">Welcome, {{ user.username }}!</h1>
+                <p style="opacity: 0.9; font-size: 1.1rem;">Track your loans and manage your finances seamlessly.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="{% url 'loans:apply_loan' %}" class="btn btn-light btn-lg" style="border-radius: 50px; font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,0.1); padding: 12px 30px;">
+                    <i class="fas fa-hand-holding-usd me-2"></i> Apply Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== VERIFICATION STATUS CARD ===== -->
+<section style="padding: 30px 0 0;">
+    <div class="container">
+        <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-body p-4">
+                <div class="row align-items-center g-3">
+                    <div class="col-md-8">
+                        <h6 style="font-weight: 700; margin-bottom: 4px;">
+                            <i class="fas fa-shield-alt me-2" style="color: #0a5c36;"></i> Verification Status
+                        </h6>
+                        <div class="d-flex flex-wrap gap-3">
+                            <div>
+                                <span class="badge {% if user.profile.national_id_verified %}bg-success{% else %}bg-warning text-dark{% endif %}" style="font-size: 0.85rem;">
+                                    {% if user.profile.national_id_verified %}
+                                        <i class="fas fa-check-circle me-1"></i> ID Verified
+                                    {% else %}
+                                        <i class="fas fa-clock me-1"></i> ID Pending
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="badge {% if user.profile.profile_picture %}bg-success{% else %}bg-danger{% endif %}" style="font-size: 0.85rem;">
+                                    {% if user.profile.profile_picture %}
+                                        <i class="fas fa-check-circle me-1"></i> Photo Uploaded
+                                    {% else %}
+                                        <i class="fas fa-times-circle me-1"></i> Photo Missing
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="badge {% if user.profile.is_verified %}bg-success{% else %}bg-warning text-dark{% endif %}" style="font-size: 0.85rem;">
+                                    {% if user.profile.is_verified %}
+                                        <i class="fas fa-check-circle me-1"></i> Account Verified
+                                    {% else %}
+                                        <i class="fas fa-clock me-1"></i> Pending Review
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        {% if not user.profile.is_verified %}
+                            <small style="color: #6c757d; display: block; margin-top: 4px;">
+                                <i class="fas fa-info-circle me-1"></i> 
+                                Your account is pending verification. Please ensure you've uploaded your profile picture and National ID.
+                            </small>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        {% if user.profile.national_id %}
+                            <small style="color: #6c757d;">NIN: {{ user.profile.national_id }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PAYMENT / DISBURSEMENT DETAILS CARD ===== -->
+<section style="padding: 20px 0 0;">
+    <div class="container">
+        <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
+            <div class="card-body p-4">
+                <h6 style="font-weight: 700; margin-bottom: 16px;">
+                    <i class="fas fa-credit-card me-2" style="color: #0a5c36;"></i> Payment / Disbursement Details
+                </h6>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div style="background: #f8fafc; border-radius: 12px; padding: 12px;">
+                            <small style="color: #6c757d;">Mobile Money</small>
+                            <div style="font-weight: 600;">
+                                {{ user.profile.mobile_money_number|default:"Not set" }}
+                                {% if user.profile.mobile_money_number %}
+                                    <span class="badge bg-secondary ms-1">{{ user.profile.get_mobile_money_network_display }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div style="background: #f8fafc; border-radius: 12px; padding: 12px;">
+                            <small style="color: #6c757d;">Preferred Method</small>
+                            <div style="font-weight: 600;">{{ user.profile.get_preferred_disbursement_display|default:"Not set" }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div style="background: #f8fafc; border-radius: 12px; padding: 12px;">
+                            <small style="color: #6c757d;">Bank Account</small>
+                            <div style="font-weight: 600;">{{ user.profile.bank_name|default:"Not set" }}</div>
+                            {% if user.profile.bank_account_number %}
+                                <small style="color: #6c757d;">{{ user.profile.bank_account_number }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== REPAYMENT ALERTS (NEW) ===== -->
+{% if overdue_payments or next_payment %}
+    <section style="padding: 20px 0 0;">
+        <div class="container">
+
+            <!-- OVERDUE ALERT -->
+            {% if overdue_count > 0 %}
+                <div class="card border-0 shadow-sm mb-3" style="border-radius: 20px; overflow: hidden; background: #fef2f2; border-left: 5px solid #dc3545;">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div>
+                                <h6 style="font-weight: 700; color: #dc3545; margin-bottom: 4px;">
+                                    <i class="fas fa-exclamation-triangle me-2"></i> Overdue Payment{{ overdue_count|pluralize }}
+                                </h6>
+                                <p style="color: #6c757d; margin: 0; font-size: 0.95rem;">
+                                    You have <strong style="color: #dc3545;">{{ overdue_count }}</strong> overdue payment{{ overdue_count|pluralize }}. Please contact support to make payment.
+                                </p>
+                            </div>
+                            <div class="mt-2 mt-md-0">
+                                <a href="{% url 'loans:contact' %}" class="btn btn-danger" style="border-radius: 50px; padding: 8px 24px;">
+                                    <i class="fas fa-headset me-1"></i> Contact Support
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- NEXT PAYMENT ALERT -->
+            {% if next_payment %}
+                <div class="card border-0 shadow-sm" style="border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, #e8f4fd 0%, #f0f9ff 100%); border-left: 5px solid #0dcaf0;">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center g-3">
+                            <div class="col-md-3">
+                                <div style="background: #fff; border-radius: 12px; padding: 12px; text-align: center;">
+                                    <i class="fas fa-calendar-check" style="font-size: 1.5rem; color: #0dcaf0;"></i>
+                                    <div style="font-size: 0.8rem; color: #6c757d; margin-top: 4px;">Next Payment</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <small style="color: #6c757d;">Amount Due</small>
+                                <div style="font-weight: 800; font-size: 1.8rem; color: #0a5c36;">
+                                    ${{ next_payment.amount_due|floatformat:2 }}
+                                </div>
+                                <small style="color: #6c757d;">
+                                    Due: {{ next_payment.due_date|date:"F d, Y" }}
+                                    {% if next_payment_days is not None %}
+                                        <span class="badge {% if next_payment_days <= 3 %}bg-danger{% elif next_payment_days <= 7 %}bg-warning text-dark{% else %}bg-info{% endif %} ms-2">
+                                            {% if next_payment_days == 0 %}
+                                                Due Today!
+                                            {% elif next_payment_days == 1 %}
+                                                Tomorrow
+                                            {% else %}
+                                                in {{ next_payment_days }} days
+                                            {% endif %}
+                                        </span>
+                                    {% endif %}
+                                </small>
+                            </div>
+                            <div class="col-md-3 text-md-end">
+                                <a href="{% url 'loans:loan_detail' next_payment.loan.id %}" class="btn btn-primary" style="border-radius: 50px; padding: 10px 24px;">
+                                    <i class="fas fa-eye me-1"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- UPCOMING PAYMENTS LIST -->
+            {% if upcoming_payments %}
+                <div class="card border-0 shadow-sm mt-3" style="border-radius: 20px; overflow: hidden;">
+                    <div class="card-header bg-white py-3" style="border-bottom: 1px solid #e9ecef;">
+                        <h6 class="mb-0 fw-bold">
+                            <i class="fas fa-clock me-2 text-info"></i> Upcoming Payments
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" style="min-width: 500px;">
+                                <thead style="background: #f8fafc;">
+                                    <tr>
+                                        <th style="padding: 14px 16px;">Loan #</th>
+                                        <th style="padding: 14px 16px;">Due Date</th>
+                                        <th style="padding: 14px 16px;">Amount</th>
+                                        <th style="padding: 14px 16px;">Days Left</th>
+                                        <th style="padding: 14px 16px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for payment in upcoming_payments %}
+                                        <tr>
+                                            <td style="padding: 14px 16px; font-weight: 600;">#{{ payment.loan.id }}</td>
+                                            <td style="padding: 14px 16px;">{{ payment.due_date|date:"M d, Y" }}</td>
+                                            <td style="padding: 14px 16px; font-weight: 700; color: #0a5c36;">${{ payment.amount_due|floatformat:2 }}</td>
+                                            <td style="padding: 14px 16px;">
+                                                {% if payment.due_date == today %}
+                                                    <span class="badge bg-danger">Today</span>
+                                                {% else %}
+                                                    <span class="badge bg-info">{{ payment.due_date|timeuntil }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td style="padding: 14px 16px;">
+                                                <a href="{% url 'loans:loan_detail' payment.loan.id %}" class="btn btn-sm btn-outline-primary" style="border-radius: 30px;">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+{% endif %}
+
+<!-- ===== STATS CARDS ===== -->
+<section style="padding: 30px 0 0;">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm text-center p-3" style="border-radius: 20px; border-left: 4px solid #0a5c36; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.04)'">
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #0a5c36;">{{ credit_score }}</div>
+                    <div style="color: #6c757d; font-size: 0.9rem;"><i class="fas fa-chart-line me-1"></i> Credit Score</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="card border-0 shadow-sm text-center p-3" style="border-radius: 20px; border-left: 4px solid #198754; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.04)'">
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #198754;">{{ total_loans }}</div>
+                    <div style="color: #6c757d; font-size: 0.9rem;"><i class="fas fa-file-invoice me-1"></i> Total Loans</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="card border-0 shadow-sm text-center p-3" style="border-radius: 20px; border-left: 4px solid #0dcaf0; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.04)'">
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #0dcaf0;">{{ active_loans_count }}</div>
+                    <div style="color: #6c757d; font-size: 0.9rem;"><i class="fas fa-check-circle me-1"></i> Active Loans</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="card border-0 shadow-sm text-center p-3" style="border-radius: 20px; border-left: 4px solid #f7931e; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.04)'">
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #f7931e;">${{ total_borrowed|floatformat:0 }}</div>
+                    <div style="color: #6c757d; font-size: 0.9rem;"><i class="fas fa-hand-holding-usd me-1"></i> Total Borrowed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== QUICK ACTIONS ===== -->
+<section style="padding: 30px 0;">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-sm-4" data-aos="fade-up" data-aos-delay="100">
+                <a href="{% url 'loans:apply_loan' %}" class="btn btn-primary-custom w-100 py-3" style="border-radius: 50px; font-size: 1rem;">
+                    <i class="fas fa-plus-circle me-2"></i> New Loan
+                </a>
+            </div>
+            <div class="col-sm-4" data-aos="fade-up" data-aos-delay="200">
+                <a href="{% url 'loans:services' %}" class="btn btn-outline-primary-custom w-100 py-3" style="border-radius: 50px; font-size: 1rem;">
+                    <i class="fas fa-search me-2"></i> Browse Products
+                </a>
+            </div>
+            <div class="col-sm-4" data-aos="fade-up" data-aos-delay="300">
+                <a href="{% url 'loans:contact' %}" class="btn btn-outline-secondary w-100 py-3" style="border-radius: 50px; font-size: 1rem;">
+                    <i class="fas fa-headset me-2"></i> Support
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== LOAN HISTORY ===== -->
+<section style="padding: 0 0 80px;">
+    <div class="container">
+        <div class="card border-0 shadow-sm" style="border-radius: 24px; overflow: hidden;">
+            <div class="card-header bg-white py-3" style="border-bottom: 1px solid #e9ecef;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-history me-2 text-primary"></i> Loan History</h5>
+                    <span class="badge bg-secondary">{{ loans|length }}</span>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                {% if loans %}
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0" style="min-width: 600px;">
+                            <thead style="background: #f8fafc;">
+                                <tr>
+                                    <th style="padding: 14px 16px;">#ID</th>
+                                    <th style="padding: 14px 16px;">Product</th>
+                                    <th style="padding: 14px 16px;">Amount</th>
+                                    <th style="padding: 14px 16px;">EMI</th>
+                                    <th style="padding: 14px 16px;">Status</th>
+                                    <th style="padding: 14px 16px;">Date</th>
+                                    <th style="padding: 14px 16px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for loan in loans %}
+                                    <tr>
+                                        <td style="padding: 14px 16px; font-weight: 600;">#{{ loan.id }}</td>
+                                        <td style="padding: 14px 16px;">{{ loan.product.name|truncatechars:20 }}</td>
+                                        <td style="padding: 14px 16px; font-weight: 600;">${{ loan.amount_requested }}</td>
+                                        <td style="padding: 14px 16px;">${{ loan.monthly_emi|floatformat:0 }}</td>
+                                        <td style="padding: 14px 16px;">
+                                            <span class="badge {% if loan.status == 'APPROVED' %}bg-success{% elif loan.status == 'PENDING' %}bg-warning text-dark{% elif loan.status == 'REJECTED' %}bg-danger{% elif loan.status == 'DISBURSED' %}bg-info{% else %}bg-secondary{% endif %}">
+                                                {{ loan.get_status_display }}
+                                            </span>
+                                        </td>
+                                        <td style="padding: 14px 16px;">{{ loan.created_at|date:"M d" }}</td>
+                                        <td style="padding: 14px 16px;">
+                                            <a href="{% url 'loans:loan_detail' loan.id %}" class="btn btn-sm btn-outline-primary" style="border-radius: 30px;">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox" style="font-size: 48px; color: #6c757d;"></i>
+                        <h5 class="mt-3">No loan applications yet</h5>
+                        <p style="color: #6c757d;">Take the first step towards your financial goals.</p>
+                        <a href="{% url 'loans:apply_loan' %}" class="btn btn-primary-custom" style="border-radius: 50px;">
+                            <i class="fas fa-plus me-2"></i> Apply Now
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

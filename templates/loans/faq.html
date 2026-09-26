@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}FAQ – Kinsali Loans{% endblock %}
+
+{% block content %}
+
+<!-- ===== PAGE HEADER ===== -->
+<section style="background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); padding: 100px 0 60px; color: #fff; margin-top: -76px;">
+    <div class="container text-center" data-aos="fade-up">
+        <span class="badge bg-warning text-dark px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+            <i class="fas fa-question-circle me-1"></i> FAQ
+        </span>
+        <h1 style="font-weight: 800; font-size: 3rem;">Frequently Asked <br>Questions</h1>
+        <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 16px auto 0;">Find answers to the most common questions about our loan services.</p>
+    </div>
+</section>
+
+<!-- ===== FAQ ACCORDION ===== -->
+<section style="padding: 80px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="faqAccordion">
+
+                    <!-- FAQ 1 -->
+                    <div class="accordion-item border-0 shadow-sm mb-3" style="border-radius: 16px; overflow: hidden;" data-aos="fade-up">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="border-radius: 16px; font-weight: 600; padding: 20px;">
+                                <i class="fas fa-file-alt text-primary me-3"></i> What documents do I need to apply?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" style="color: #6c757d; padding: 20px; line-height: 1.8;">
+                                You'll need a valid national ID, proof of income (payslip or bank statement for 3 months), and a valid phone number and email address. All documents must be clear and up-to-date.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="accordion-item border-0 shadow-sm mb-3" style="border-radius: 16px; overflow: hidden;" data-aos="fade-up" data-aos-delay="100">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="border-radius: 16px; font-weight: 600; padding: 20px;">
+                                <i class="fas fa-clock text-primary me-3"></i> How long does the approval take?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" style="color: #6c757d; padding: 20px; line-height: 1.8;">
+                                Most applications are approved within <strong>2-5 minutes</strong>. In some cases, it may take up to 24 hours for manual review. You'll receive an email notification once a decision is made.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="accordion-item border-0 shadow-sm mb-3" style="border-radius: 16px; overflow: hidden;" data-aos="fade-up" data-aos-delay="200">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="border-radius: 16px; font-weight: 600; padding: 20px;">
+                                <i class="fas fa-percent text-primary me-3"></i> What interest rates do you offer?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" style="color: #6c757d; padding: 20px; line-height: 1.8;">
+                                Our interest rates range from <strong>5% to 15% APR</strong> depending on the loan product, amount, and your credit score. All rates are clearly communicated before you accept the loan – no surprises.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="accordion-item border-0 shadow-sm mb-3" style="border-radius: 16px; overflow: hidden;" data-aos="fade-up" data-aos-delay="300">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" style="border-radius: 16px; font-weight: 600; padding: 20px;">
+                                <i class="fas fa-calendar-check text-primary me-3"></i> Can I repay early?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" style="color: #6c757d; padding: 20px; line-height: 1.8;">
+                                <strong>Yes!</strong> You can repay your loan at any time without any early repayment penalties. You'll only pay interest for the period you actually used the money.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="accordion-item border-0 shadow-sm mb-3" style="border-radius: 16px; overflow: hidden;" data-aos="fade-up" data-aos-delay="400">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" style="border-radius: 16px; font-weight: 600; padding: 20px;">
+                                <i class="fas fa-shield-alt text-primary me-3"></i> Is my data safe with Kinsali?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" style="color: #6c757d; padding: 20px; line-height: 1.8;">
+                                <strong>Absolutely!</strong> We use enterprise-grade encryption and security measures to protect your data. We never share your information with third parties without your explicit consent.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 6 -->
+                    <div class="accordion-item border-0 shadow-sm mb-3" style="border-radius: 16px; overflow: hidden;" data-aos="fade-up" data-aos-delay="500">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" style="border-radius: 16px; font-weight: 600; padding: 20px;">
+                                <i class="fas fa-credit-card text-primary me-3"></i> How do I receive the loan amount?
+                            </button>
+                        </h2>
+                        <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body" style="color: #6c757d; padding: 20px; line-height: 1.8;">
+                                Once approved, the loan amount is disbursed directly to your <strong>bank account or mobile money</strong> within minutes. You'll receive a confirmation notification once the transfer is complete.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Still have questions? -->
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <p style="color: #6c757d; font-size: 1.05rem;">Still have questions? We're here to help.</p>
+                    <a href="{% url 'loans:contact' %}" class="btn btn-primary-custom px-5 py-3" style="border-radius: 50px;">
+                        <i class="fas fa-envelope me-2"></i> Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

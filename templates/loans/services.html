@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Our Services – Kinsali Loans{% endblock %}
+
+{% block content %}
+
+<!-- ===== PAGE HEADER ===== -->
+<section style="background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); padding: 100px 0 60px; color: #fff; margin-top: -76px;">
+    <div class="container text-center" data-aos="fade-up">
+        <span class="badge bg-warning text-dark px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+            <i class="fas fa-hand-holding-usd me-1"></i> Our Services
+        </span>
+        <h1 style="font-weight: 800; font-size: 3rem;">Loan Products <br>For Every Need</h1>
+        <p style="font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 16px auto 0;">Find the perfect loan product that fits your unique financial situation.</p>
+    </div>
+</section>
+
+<!-- ===== LOAN PRODUCTS GRID ===== -->
+<section style="padding: 80px 0;">
+    <div class="container">
+        <div class="row g-4">
+            {% for product in products %}
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 20px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 60px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.06)'">
+                        <div class="card-body p-4">
+                            <div style="width: 56px; height: 56px; background: rgba(10,92,54,0.08); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #0a5c36; margin-bottom: 16px;">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <h4 style="font-weight: 700;">{{ product.name }}</h4>
+                            <p style="color: #6c757d; font-size: 0.95rem; line-height: 1.6;">{{ product.description }}</p>
+                            <div style="background: #f8fafc; border-radius: 16px; padding: 16px; margin: 16px 0;">
+                                <div class="d-flex justify-content-between py-1"><span style="color: #6c757d;">Amount</span> <strong>${{ product.min_amount }} – ${{ product.max_amount }}</strong></div>
+                                <div class="d-flex justify-content-between py-1"><span style="color: #6c757d;">Interest Rate</span> <strong>{{ product.interest_rate }}% APR</strong></div>
+                                <div class="d-flex justify-content-between py-1"><span style="color: #6c757d;">Tenure</span> <strong>{{ product.min_tenure_months }} – {{ product.max_tenure_months }} months</strong></div>
+                                <div class="d-flex justify-content-between py-1"><span style="color: #6c757d;">Processing Fee</span> <strong>${{ product.processing_fee }}</strong></div>
+                            </div>
+                            <a href="{% url 'loans:apply_loan' %}" class="btn btn-primary-custom w-100" style="border-radius: 50px;">
+                                <i class="fas fa-hand-holding-usd me-2"></i> Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p style="color: #6c757d; font-size: 1.1rem;">No loan products available at the moment. Please check back later.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ===== COMPARISON TABLE ===== -->
+<section style="padding: 60px 0; background: #f8fafc;">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-info text-white px-3 py-2 mb-3" style="border-radius: 30px;">
+                <i class="fas fa-table me-1"></i> Compare Products
+            </span>
+            <h2 style="font-weight: 700; font-size: 2.5rem;">Find the Right Fit</h2>
+        </div>
+        <div class="table-responsive" data-aos="fade-up">
+            <table class="table table-hover" style="border-radius: 16px; overflow: hidden;">
+                <thead style="background: #0a5c36; color: #fff;">
+                    <tr>
+                        <th style="padding: 16px 20px;">Product</th>
+                        <th style="padding: 16px 20px;">Min Amount</th>
+                        <th style="padding: 16px 20px;">Max Amount</th>
+                        <th style="padding: 16px 20px;">Interest Rate</th>
+                        <th style="padding: 16px 20px;">Tenure</th>
+                        <th style="padding: 16px 20px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr style="background: #fff;">
+                            <td style="padding: 16px 20px; font-weight: 600;">{{ product.name }}</td>
+                            <td style="padding: 16px 20px;">${{ product.min_amount }}</td>
+                            <td style="padding: 16px 20px;">${{ product.max_amount }}</td>
+                            <td style="padding: 16px 20px;">{{ product.interest_rate }}%</td>
+                            <td style="padding: 16px 20px;">{{ product.min_tenure_months }}-{{ product.max_tenure_months }} mo</td>
+                            <td style="padding: 16px 20px;">
+                                <a href="{% url 'loans:apply_loan' %}" class="btn btn-sm btn-primary-custom" style="border-radius: 30px;">
+                                    Apply <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="6" class="text-center" style="padding: 30px; color: #6c757d;">No products available</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

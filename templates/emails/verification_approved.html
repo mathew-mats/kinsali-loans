@@ -1,0 +1,25 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Account Verified ✅</h2>
+
+<p>Great news, {{ user.username }}!</p>
+
+<p>Your identity has been successfully verified. Your Kinsali Loans account is now fully active.</p>
+
+<div class="info-box">
+    <p style="margin: 0;"><strong>You can now:</strong></p>
+    <ul style="margin: 8px 0 0; padding-left: 20px;">
+        <li>Apply for loans</li>
+        <li>View loan products</li>
+        <li>Track your applications</li>
+    </ul>
+</div>
+
+<a href="http://127.0.0.1:8000/dashboard/" class="btn">Apply for a Loan</a>
+
+<p style="margin-top: 30px; color: #6c757d; font-size: 14px;">
+    Welcome aboard! 🚀<br>
+    <strong>The Kinsali Loans Team</strong>
+</p>
+{% endblock %}

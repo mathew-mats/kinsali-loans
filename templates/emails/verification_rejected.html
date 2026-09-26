@@ -1,0 +1,29 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Verification Update</h2>
+
+<p>Hi {{ user.username }},</p>
+
+<p>Unfortunately, we were unable to verify your account with the documents you provided.</p>
+
+<div class="info-box" style="border-left-color: #dc3545;">
+    <p style="margin: 0;"><strong style="color: #dc3545;">Reason:</strong></p>
+    <p style="margin: 8px 0 0;">{{ reason|default:"Documents did not meet our requirements." }}</p>
+</div>
+
+<p><strong>What to do next:</strong></p>
+<ul>
+    <li>Log in to your account</li>
+    <li>Check that your National ID image is clear and readable</li>
+    <li>Make sure your profile photo shows your face clearly</li>
+    <li>Contact our support team if you need assistance</li>
+</ul>
+
+<a href="http://127.0.0.1:8000/contact/" class="btn">Contact Support</a>
+
+<p style="margin-top: 30px; color: #6c757d; font-size: 14px;">
+    We're here to help.<br>
+    <strong>The Kinsali Loans Team</strong>
+</p>
+{% endblock %}

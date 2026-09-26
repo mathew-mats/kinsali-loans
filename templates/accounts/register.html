@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Account – Kinsali Loans{% endblock %}
+
+{% block content %}
+
+<!-- ===== PAGE HEADER ===== -->
+<section style="background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); padding: 120px 0 60px; color: #fff; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -80px; left: -80px; width: 200px; height: 200px; background: rgba(255,255,255,0.03); border-radius: 50%;"></div>
+    <div class="container text-center position-relative" style="z-index: 2;" data-aos="fade-up">
+        <span class="badge bg-warning text-dark px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+            <i class="fas fa-user-plus me-1"></i> Get Started
+        </span>
+        <h1 style="font-weight: 800; font-size: 3rem;">Create Your <br>Account Today</h1>
+        <p style="font-size: 1.15rem; opacity: 0.9; max-width: 500px; margin: 16px auto 0;">Join thousands of satisfied customers. It takes less than 5 minutes.</p>
+    </div>
+</section>
+
+<!-- ===== REGISTRATION FORM ===== -->
+<section style="padding: 60px 0 80px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up">
+                <div style="background: #fff; border-radius: 24px; box-shadow: 0 10px 60px rgba(0,0,0,0.06); padding: 40px; border: 1px solid rgba(0,0,0,0.04);">
+                    <div class="text-center mb-4">
+                        <div style="width: 64px; height: 64px; background: rgba(10,92,54,0.08); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #0a5c36; margin: 0 auto 12px;">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <h3 style="font-weight: 700;">Create Your Account</h3>
+                        <p style="color: #6c757d;">Fill in your details below to get started</p>
+                    </div>
+
+                    <!-- IMPORTANT: enctype="multipart/form-data" for file uploads -->
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="row g-4">
+                            <!-- ===== LEFT COLUMN: Account Details ===== -->
+                            <div class="col-md-6">
+                                <div style="background: #f8fafc; border-radius: 16px; padding: 24px; height: 100%;">
+                                    <h6 style="font-weight: 700; margin-bottom: 20px; color: #0a5c36;">
+                                        <i class="fas fa-user-circle me-2"></i> Account Details
+                                    </h6>
+
+                                    <!-- Username -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-user me-1"></i> Username
+                                        </label>
+                                        {{ form.username }}
+                                        {% if form.username.errors %}
+                                            <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-envelope me-1"></i> Email Address
+                                        </label>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                            <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Password 1 -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-lock me-1"></i> Password
+                                        </label>
+                                        {{ form.password1 }}
+                                        {% if form.password1.help_text %}
+                                            <div class="form-text small">{{ form.password1.help_text|safe }}</div>
+                                        {% endif %}
+                                        {% if form.password1.errors %}
+                                            <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Password 2 -->
+                                    <div class="mb-0">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-check-circle me-1"></i> Confirm Password
+                                        </label>
+                                        {{ form.password2 }}
+                                        {% if form.password2.errors %}
+                                            <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ===== RIGHT COLUMN: Personal Information ===== -->
+                            <div class="col-md-6">
+                                <div style="background: #f8fafc; border-radius: 16px; padding: 24px; height: 100%;">
+                                    <h6 style="font-weight: 700; margin-bottom: 20px; color: #0a5c36;">
+                                        <i class="fas fa-id-card me-2"></i> Personal Information
+                                    </h6>
+
+                                    <!-- Phone Number -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-phone me-1"></i> Phone Number
+                                        </label>
+                                        {{ form.phone_number }}
+                                        {% if form.phone_number.errors %}
+                                            <div class="text-danger small mt-1">{{ form.phone_number.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Date of Birth -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-calendar-alt me-1"></i> Date of Birth
+                                        </label>
+                                        {{ form.date_of_birth }}
+                                        {% if form.date_of_birth.errors %}
+                                            <div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- National ID -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-id-card me-1"></i> National ID Number
+                                        </label>
+                                        {{ form.national_id }}
+                                        {% if form.national_id.help_text %}
+                                            <div class="form-text small">{{ form.national_id.help_text }}</div>
+                                        {% endif %}
+                                        {% if form.national_id.errors %}
+                                            <div class="text-danger small mt-1">{{ form.national_id.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Employment Status -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-briefcase me-1"></i> Employment Status
+                                        </label>
+                                        {{ form.employment_status }}
+                                        {% if form.employment_status.errors %}
+                                            <div class="text-danger small mt-1">{{ form.employment_status.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Monthly Income -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-dollar-sign me-1"></i> Monthly Income ($)
+                                        </label>
+                                        {{ form.monthly_income }}
+                                        {% if form.monthly_income.errors %}
+                                            <div class="text-danger small mt-1">{{ form.monthly_income.errors }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Employer Name -->
+                                    <div class="mb-0">
+                                        <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                            <i class="fas fa-building me-1"></i> Employer Name
+                                            <span style="color: #6c757d; font-weight: 400;">(optional)</span>
+                                        </label>
+                                        {{ form.employer_name }}
+                                        {% if form.employer_name.errors %}
+                                            <div class="text-danger small mt-1">{{ form.employer_name.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ===== ADDRESS SECTION ===== -->
+                        <div style="background: #f8fafc; border-radius: 16px; padding: 24px; margin-top: 24px;">
+                            <h6 style="font-weight: 700; margin-bottom: 20px; color: #0a5c36;">
+                                <i class="fas fa-home me-2"></i> Address Information
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-map-pin me-1"></i> Residential Address
+                                    </label>
+                                    {{ form.residential_address }}
+                                    {% if form.residential_address.errors %}
+                                        <div class="text-danger small mt-1">{{ form.residential_address.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-city me-1"></i> City
+                                    </label>
+                                    {{ form.city }}
+                                    {% if form.city.errors %}
+                                        <div class="text-danger small mt-1">{{ form.city.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-map-marker-alt me-1"></i> State / Province
+                                    </label>
+                                    {{ form.state }}
+                                    {% if form.state.errors %}
+                                        <div class="text-danger small mt-1">{{ form.state.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ===== DOCUMENT UPLOAD SECTION ===== -->
+                        <div style="background: #f8fafc; border-radius: 16px; padding: 24px; margin-top: 24px; border: 2px dashed #0a5c36;">
+                            <h6 style="font-weight: 700; margin-bottom: 16px; color: #0a5c36;">
+                                <i class="fas fa-id-card me-2"></i> Document Upload 
+                                <span style="font-size: 0.8rem; color: #6c757d; font-weight: 400;">(Required for Verification)</span>
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-user me-1"></i> Profile Picture
+                                    </label>
+                                    {{ form.profile_picture }}
+                                    <div class="form-text">Upload a clear photo of yourself (passport size, JPG/PNG)</div>
+                                    {% if form.profile_picture.errors %}
+                                        <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-id-card me-1"></i> National ID Image
+                                    </label>
+                                    {{ form.national_id_image }}
+                                    <div class="form-text">Upload a clear photo of your National ID (front side, JPG/PNG)</div>
+                                    {% if form.national_id_image.errors %}
+                                        <div class="text-danger small mt-1">{{ form.national_id_image.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <small style="color: #6c757d;">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Your documents will be verified by our team. Only verified users can apply for loans.
+                                </small>
+                            </div>
+                        </div>
+
+                        <!-- ===== PAYMENT / DISBURSEMENT SECTION (NEW) ===== -->
+                        <div style="background: #f8fafc; border-radius: 16px; padding: 24px; margin-top: 24px; border: 2px solid #0a5c36;">
+                            <h6 style="font-weight: 700; margin-bottom: 16px; color: #0a5c36;">
+                                <i class="fas fa-credit-card me-2"></i> Payment / Disbursement Details
+                                <span style="font-size: 0.8rem; color: #6c757d; font-weight: 400;">(How you'll receive the loan)</span>
+                            </h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-phone me-1"></i> Mobile Money Number
+                                    </label>
+                                    {{ form.mobile_money_number }}
+                                    <div class="form-text">Enter your mobile money number (e.g., 0772 123456)</div>
+                                    {% if form.mobile_money_number.errors %}
+                                        <div class="text-danger small mt-1">{{ form.mobile_money_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-network-wired me-1"></i> Mobile Money Network
+                                    </label>
+                                    {{ form.mobile_money_network }}
+                                    {% if form.mobile_money_network.errors %}
+                                        <div class="text-danger small mt-1">{{ form.mobile_money_network.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-hand-holding-usd me-1"></i> Preferred Disbursement Method
+                                    </label>
+                                    {{ form.preferred_disbursement }}
+                                    <div class="form-text">How you want to receive the loan</div>
+                                    {% if form.preferred_disbursement.errors %}
+                                        <div class="text-danger small mt-1">{{ form.preferred_disbursement.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-university me-1"></i> Bank Name
+                                        <span style="color: #6c757d; font-weight: 400;">(optional)</span>
+                                    </label>
+                                    {{ form.bank_name }}
+                                    {% if form.bank_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.bank_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-user me-1"></i> Bank Account Name
+                                        <span style="color: #6c757d; font-weight: 400;">(optional)</span>
+                                    </label>
+                                    {{ form.bank_account_name }}
+                                    {% if form.bank_account_name.errors %}
+                                        <div class="text-danger small mt-1">{{ form.bank_account_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold" style="font-size: 0.9rem;">
+                                        <i class="fas fa-hashtag me-1"></i> Bank Account Number
+                                        <span style="color: #6c757d; font-weight: 400;">(optional)</span>
+                                    </label>
+                                    {{ form.bank_account_number }}
+                                    {% if form.bank_account_number.errors %}
+                                        <div class="text-danger small mt-1">{{ form.bank_account_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ===== SUBMIT BUTTON ===== -->
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary-custom w-100 py-3" style="border-radius: 50px; font-size: 1.05rem;">
+                                <i class="fas fa-user-plus me-2"></i> Create Account
+                            </button>
+                        </div>
+
+                        <!-- ===== LOGIN LINK ===== -->
+                        <div class="text-center mt-3">
+                            <p style="color: #6c757d;">
+                                Already have an account?
+                                <a href="{% url 'accounts:login' %}" style="color: #0a5c36; font-weight: 600; text-decoration: none;">
+                                    Login here <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

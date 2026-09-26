@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Fast Loans, Better Future – Kinsali{% endblock %}
+
+{% block content %}
+
+<!-- ===== HERO SECTION ===== -->
+<section style="position: relative; background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); padding: 100px 0 80px; color: #fff; overflow: hidden; margin-top: -76px;">
+    <!-- Floating decorations -->
+    <div style="position: absolute; top: -300px; right: -200px; width: 600px; height: 600px; background: rgba(255,255,255,0.03); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -200px; left: -100px; width: 400px; height: 400px; background: rgba(255,255,255,0.025); border-radius: 50%;"></div>
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 800px; background: rgba(255,255,255,0.01); border-radius: 50%;"></div>
+    
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center g-5">
+            <!-- Left Content -->
+            <div class="col-lg-6" data-aos="fade-right">
+                <span class="badge bg-warning text-dark px-3 py-2 mb-3" style="font-size: 0.85rem; border-radius: 30px;">
+                    <i class="fas fa-shield-alt me-1"></i> 100% Secure & Trusted
+                </span>
+                <h1 style="font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px;">
+                    Get Your <br><span style="color: #f7931e;">Loan Approved</span> <br>In Minutes
+                </h1>
+                <p style="font-size: 1.15rem; opacity: 0.9; margin-bottom: 30px; max-width: 500px; line-height: 1.6;">
+                    Quick, affordable, and reliable loans to fuel your dreams. Join thousands of satisfied customers.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    {% if not user.is_authenticated %}
+                        <a href="{% url 'accounts:register' %}" class="btn btn-light px-5 py-3 rounded-pill fw-bold" style="font-size: 1.05rem; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                            <i class="fas fa-user-plus me-2"></i> Get Started Now
+                        </a>
+                        <a href="{% url 'loans:how_it_works' %}" class="btn btn-outline-light px-5 py-3 rounded-pill fw-bold" style="font-size: 1.05rem; border-width: 2px;">
+                            <i class="fas fa-play-circle me-2"></i> How It Works
+                        </a>
+                    {% else %}
+                        <a href="{% url 'loans:dashboard' %}" class="btn btn-light px-5 py-3 rounded-pill fw-bold" style="font-size: 1.05rem; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                            <i class="fas fa-tachometer-alt me-2"></i> Go to Dashboard
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="mt-4 d-flex flex-wrap gap-4">
+                    <div><i class="fas fa-star text-warning me-1"></i> <span style="font-weight: 700; font-size: 1.15rem;">4.8/5</span> <span style="opacity: 0.8; font-size: 0.95rem;">(2,500+ reviews)</span></div>
+                    <div><i class="fas fa-bolt text-warning me-1"></i> <span style="font-weight: 700; font-size: 1.15rem;">2 mins</span> <span style="opacity: 0.8; font-size: 0.95rem;">Average approval</span></div>
+                </div>
+            </div>
+            
+            <!-- Right Glass Card -->
+            <div class="col-lg-6" data-aos="fade-left">
+                <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 24px; padding: 40px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 20px 60px rgba(0,0,0,0.1);">
+                    <div class="text-center">
+                        <i class="fas fa-hand-holding-usd" style="font-size: 64px; color: #f7931e; margin-bottom: 16px;"></i>
+                        <h3 style="font-weight: 700; margin-bottom: 8px;">Need a Loan?</h3>
+                        <p style="opacity: 0.9; margin-bottom: 20px;">Apply now and get approved in record time!</p>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <div style="background: rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 8px; text-align: center;">
+                                <i class="fas fa-dollar-sign" style="color: #f7931e; font-size: 20px;"></i>
+                                <div style="font-size: 0.8rem; opacity: 0.85; margin-top: 4px;">Up to $50K</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div style="background: rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 8px; text-align: center;">
+                                <i class="fas fa-percent" style="color: #f7931e; font-size: 20px;"></i>
+                                <div style="font-size: 0.8rem; opacity: 0.85; margin-top: 4px;">Low Rates</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div style="background: rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 8px; text-align: center;">
+                                <i class="fas fa-clock" style="color: #f7931e; font-size: 20px;"></i>
+                                <div style="font-size: 0.8rem; opacity: 0.85; margin-top: 4px;">Quick Payout</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FEATURES SECTION ===== -->
+<section style="padding: 80px 0; background: #f8fafc;">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-primary text-white px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+                <i class="fas fa-star me-1"></i> Why Choose Us
+            </span>
+            <h2 style="font-weight: 700; font-size: 2.8rem; line-height: 1.2;">Why Kinsali is Your <br class="d-sm-none">Best Choice</h2>
+            <p style="color: #6c757d; max-width: 500px; margin: 12px auto 0; font-size: 1.05rem;">We make borrowing simple, transparent, and stress-free.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm h-100 p-4 text-center" style="border-radius: 20px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 60px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.06)'">
+                    <div style="width: 70px; height: 70px; background: rgba(10, 92, 54, 0.08); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #0a5c36; margin: 0 auto 16px;">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h5 style="font-weight: 700;">Lightning Fast</h5>
+                    <p style="color: #6c757d; font-size: 0.95rem; margin-bottom: 0;">Get approved in minutes, not days. Our automated system works 24/7.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card border-0 shadow-sm h-100 p-4 text-center" style="border-radius: 20px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 60px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.06)'">
+                    <div style="width: 70px; height: 70px; background: rgba(247, 147, 30, 0.08); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #f7931e; margin: 0 auto 16px;">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <h5 style="font-weight: 700;">Best Rates</h5>
+                    <p style="color: #6c757d; font-size: 0.95rem; margin-bottom: 0;">Competitive interest rates with zero hidden fees. What you see is what you get.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card border-0 shadow-sm h-100 p-4 text-center" style="border-radius: 20px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 60px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.06)'">
+                    <div style="width: 70px; height: 70px; background: rgba(0, 184, 148, 0.08); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #00b894; margin: 0 auto 16px;">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h5 style="font-weight: 700;">100% Secure</h5>
+                    <p style="color: #6c757d; font-size: 0.95rem; margin-bottom: 0;">Your data is protected with enterprise-grade security. Privacy guaranteed.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== LOAN PRODUCTS ===== -->
+<section style="padding: 80px 0;">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-success text-white px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+                <i class="fas fa-hand-holding-usd me-1"></i> Our Products
+            </span>
+            <h2 style="font-weight: 700; font-size: 2.8rem; line-height: 1.2;">Explore Our <br class="d-sm-none">Loan Products</h2>
+        </div>
+        <div class="row g-4">
+            {% for product in products %}
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+                    <div class="card border-0 shadow-sm h-100" style="border-radius: 20px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 20px 60px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(0,0,0,0.06)'">
+                        <div class="card-body p-4">
+                            <div style="background: rgba(10, 92, 54, 0.04); border-radius: 16px; padding: 20px; margin-bottom: 16px;">
+                                <div style="width: 48px; height: 48px; background: rgba(10, 92, 54, 0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #0a5c36; margin-bottom: 12px;">
+                                    <i class="fas fa-file-invoice"></i>
+                                </div>
+                                <h5 class="card-title" style="font-weight: 700;">{{ product.name }}</h5>
+                                <p class="card-text" style="color: #6c757d; font-size: 0.95rem; margin-bottom: 0;">{{ product.description|truncatewords:15 }}</p>
+                            </div>
+                            <ul class="list-unstyled" style="font-size: 0.95rem;">
+                                <li class="py-1"><i class="fas fa-check-circle text-success me-2"></i> Min: ${{ product.min_amount }}</li>
+                                <li class="py-1"><i class="fas fa-check-circle text-success me-2"></i> Max: ${{ product.max_amount }}</li>
+                                <li class="py-1"><i class="fas fa-check-circle text-success me-2"></i> Rate: {{ product.interest_rate }}% APR</li>
+                                <li class="py-1"><i class="fas fa-check-circle text-success me-2"></i> Tenure: {{ product.min_tenure_months }}-{{ product.max_tenure_months }} months</li>
+                            </ul>
+                            <a href="{% url 'loans:services' %}" class="btn btn-outline-primary-custom w-100 mt-3" style="border-radius: 50px;">
+                                Learn More <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p style="color: #6c757d;">No loan products available at the moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{% url 'loans:services' %}" class="btn btn-primary-custom px-5 py-3" style="border-radius: 50px; font-weight: 600;">
+                View All Products <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== STATS SECTION ===== -->
+<section style="padding: 60px 0; background: #0b1a1a; color: #fff;">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div style="font-weight: 800; font-size: 2.8rem; color: #f7931e;">50K+</div>
+                <p style="opacity: 0.7; margin-bottom: 0; font-size: 0.95rem;"><i class="fas fa-users me-1"></i> Happy Customers</p>
+            </div>
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div style="font-weight: 800; font-size: 2.8rem; color: #f7931e;">$100M+</div>
+                <p style="opacity: 0.7; margin-bottom: 0; font-size: 0.95rem;"><i class="fas fa-hand-holding-usd me-1"></i> Loans Disbursed</p>
+            </div>
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div style="font-weight: 800; font-size: 2.8rem; color: #f7931e;">98%</div>
+                <p style="opacity: 0.7; margin-bottom: 0; font-size: 0.95rem;"><i class="fas fa-check-circle me-1"></i> Approval Rate</p>
+            </div>
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div style="font-weight: 800; font-size: 2.8rem; color: #f7931e;">4.8★</div>
+                <p style="opacity: 0.7; margin-bottom: 0; font-size: 0.95rem;"><i class="fas fa-star me-1"></i> Average Rating</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section style="padding: 80px 0; background: #f8fafc;">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="badge bg-info text-white px-3 py-2 mb-3" style="border-radius: 30px; font-size: 0.85rem;">
+                <i class="fas fa-quote-left me-1"></i> Testimonials
+            </span>
+            <h2 style="font-weight: 700; font-size: 2.8rem; line-height: 1.2;">What Our <br class="d-sm-none">Customers Say</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px;">
+                    <div style="color: #f7931e; margin-bottom: 12px; font-size: 0.95rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; flex: 1;">"Kinsali saved my business! The approval was super fast and the rates were the best I could find. Highly recommend!"</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: #0a5c36; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;">MM</div>
+                        <div class="ms-3">
+                            <h6 class="mb-0" style="font-weight: 600;">Mathias Mats</h6>
+                            <small style="color: #6c757d; font-size: 0.85rem;">Small Business Owner</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px;">
+                    <div style="color: #f7931e; margin-bottom: 12px; font-size: 0.95rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; flex: 1;">"I was skeptical at first, but Kinsali made the process so easy. Everything was transparent and stress-free."</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: #f7931e; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;">AF</div>
+                        <div class="ms-3">
+                            <h6 class="mb-0" style="font-weight: 600;">Akwi Felister</h6>
+                            <small style="color: #6c757d; font-size: 0.85rem;">Freelancer</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px;">
+                    <div style="color: #f7931e; margin-bottom: 12px; font-size: 0.95rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; flex: 1;">"The best loan platform in Kenya! Fast, reliable, and customer support is amazing. I keep coming back."</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: #00b894; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;">JT</div>
+                        <div class="ms-3">
+                            <h6 class="mb-0" style="font-weight: 600;">Joshua Tumwine</h6>
+                            <small style="color: #6c757d; font-size: 0.85rem;">Teacher</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA SECTION ===== -->
+<section style="padding: 80px 0; background: linear-gradient(135deg, #0a5c36 0%, #00b894 100%); color: #fff; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: rgba(255,255,255,0.03); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -150px; left: -100px; width: 300px; height: 300px; background: rgba(255,255,255,0.02); border-radius: 50%;"></div>
+    <div class="container text-center position-relative" style="z-index: 2;" data-aos="fade-up">
+        <h2 style="font-weight: 700; font-size: 2.8rem;">Ready to Get Started?</h2>
+        <p style="font-size: 1.15rem; opacity: 0.9; max-width: 500px; margin: 16px auto 30px; line-height: 1.6;">Join thousands of satisfied customers. Get your loan approved today!</p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'accounts:register' %}" class="btn btn-light px-5 py-3 rounded-pill fw-bold" style="font-size: 1.05rem; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                <i class="fas fa-user-plus me-2"></i> Create Free Account
+            </a>
+        {% else %}
+            <a href="{% url 'loans:apply_loan' %}" class="btn btn-light px-5 py-3 rounded-pill fw-bold" style="font-size: 1.05rem; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                <i class="fas fa-hand-holding-usd me-2"></i> Apply Now
+            </a>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
